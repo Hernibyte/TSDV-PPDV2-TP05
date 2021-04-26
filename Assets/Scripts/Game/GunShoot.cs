@@ -6,30 +6,35 @@ public class GunShoot : MonoBehaviour
 {
     [SerializeField] float wait;
     [SerializeField] Camera cam;
-    RaycastHit HitInfo;
-    float localTimer;
+    [SerializeField] GameObject initialRay;
+    RaycastHit hit;
+    Target target;
+    [SerializeField] float damageAmount;
+    float range = 100f;
 
     void Start()
     {
-        localTimer = wait;
+        
     }
 
     void Update()
     {
-        if (Physics.Raycast(cam.transform.position, cam.transform.forward, out HitInfo, 100.0f))
+        Debug.DrawRay(initialRay.transform.position, cam.transform.forward * range, Color.red);
+        if (Input.GetButton("Fire1"))
         {
-            Debug.DrawRay(cam.transform.position, cam.transform.forward * 100.0f, Color.yellow);
-            if (Input.GetKey(KeyCode.Mouse0))
+            Shoot();
+        }
+    }
+
+    void Shoot()
+    {
+        if (Physics.Raycast(initialRay.transform.position, cam.transform.forward, out hit, range))
+        {
+            target = hit.transform.GetComponent<Target>();
+            if (target != null)
             {
-                localTimer += Time.deltaTime;
-                if (localTimer >= wait)
-                {
-                    localTimer = 0;
-                    Debug.Log(HitInfo);
-                }
+                target.TakeDamage(damageAmount);
             }
-            else if (Input.GetKeyUp(KeyCode.Mouse0))
-                localTimer = wait;
         }
     }
 }
