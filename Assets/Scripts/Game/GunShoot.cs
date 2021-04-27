@@ -4,23 +4,18 @@ using UnityEngine;
 
 public class GunShoot : MonoBehaviour
 {
-    [SerializeField] float wait;
     [SerializeField] Camera cam;
+    [SerializeField] Player player;
     [SerializeField] GameObject initialRay;
-    RaycastHit hit;
-    Target target;
     [SerializeField] float damageAmount;
-    float range = 100f;
-
-    void Start()
-    {
-        
-    }
+    [SerializeField] float range = 100f;
+    RaycastHit hit;
+    Enemy enemy;
 
     void Update()
     {
         Debug.DrawRay(initialRay.transform.position, cam.transform.forward * range, Color.red);
-        if (Input.GetButton("Fire1"))
+        if (Input.GetButtonDown("Fire1"))
         {
             Shoot();
         }
@@ -30,10 +25,10 @@ public class GunShoot : MonoBehaviour
     {
         if (Physics.Raycast(initialRay.transform.position, cam.transform.forward, out hit, range))
         {
-            target = hit.transform.GetComponent<Target>();
-            if (target != null)
+            enemy = hit.transform.GetComponent<Enemy>();
+            if (enemy != null)
             {
-                target.TakeDamage(damageAmount);
+                enemy.TakeDamage(damageAmount, player);
             }
         }
     }
