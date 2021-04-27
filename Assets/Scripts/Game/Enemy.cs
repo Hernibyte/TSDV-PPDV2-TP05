@@ -5,9 +5,7 @@ using UnityEngine;
 public class Enemy : MonoBehaviour
 {
     [SerializeField] float health = 100f;
-    [SerializeField] float damageAmount = 50f;
     [SerializeField] int pointsAmount = 100;
-    Player player;
 
     public void TakeDamage(float amount, Player pj)
     {
@@ -27,15 +25,5 @@ public class Enemy : MonoBehaviour
     void Die()
     {
         Destroy(gameObject);
-    }
-
-    private void OnTriggerEnter(Collider other)
-    {
-        player = other.transform.GetComponent<Player>();
-        if (player != null)
-        {
-            player.TakeDamage(damageAmount);
-            Die();
-        }
     }
 }
