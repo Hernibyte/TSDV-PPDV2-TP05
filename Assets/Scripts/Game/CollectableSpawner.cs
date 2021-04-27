@@ -1,19 +1,18 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Random = UnityEngine.Random;
 
-public class EnemySpawner : MonoBehaviour
+public class CollectableSpawner : MonoBehaviour
 {
-    [SerializeField] GameObject enemy;
-    [SerializeField] int enemyLenght = 10;
+    [SerializeField] GameObject collectable;
+    [SerializeField] int collectableLenght = 10;
     Vector3 spawnPosition;
     GameObject[] ts;
     float timer = 0f;
 
-    private void Start()
+    void Start()
     {
-        ts = new GameObject[enemyLenght];
+        ts = new GameObject[collectableLenght];
     }
 
     void Update()
@@ -44,16 +43,16 @@ public class EnemySpawner : MonoBehaviour
 
     void Spawn()
     {
-        for (int i = 0; i < enemyLenght; i++)
+        for (int i = 0; i < collectableLenght; i++)
         {
             SetSpawnPosition();
-            ts[i] = Instantiate(enemy, spawnPosition, Quaternion.identity, this.transform);
+            ts[i] = Instantiate(collectable, spawnPosition, Quaternion.identity, this.transform);
         }
     }
 
     void DestroySpawn()
     {
-        for (int i = 0; i < enemyLenght; i++)
+        for (int i = 0; i < collectableLenght; i++)
         {
             Destroy(ts[i]);
         }
