@@ -8,6 +8,7 @@ public class EnemySpawner : MonoBehaviour
     [SerializeField] GameObject enemy;
     [SerializeField] int enemyLenght = 10;
     Vector3 spawnPosition;
+    Vector3 spawnRotation;
     GameObject[] ts;
     float timer = 0f;
 
@@ -42,12 +43,18 @@ public class EnemySpawner : MonoBehaviour
         spawnPosition = new Vector3(Random.Range(405, 592), 1.60f, Random.Range(402, 597));
     }
 
+    void SetSpawnRotation()
+    {
+        spawnRotation = new Vector3(0f, Random.Range(0, 360), 0f);
+    }
+
     void Spawn()
     {
         for (int i = 0; i < enemyLenght; i++)
         {
             SetSpawnPosition();
-            ts[i] = Instantiate(enemy, spawnPosition, Quaternion.identity, this.transform);
+            SetSpawnRotation();
+            ts[i] = Instantiate(enemy, spawnPosition, Quaternion.Euler(spawnRotation), this.transform);
         }
     }
 
