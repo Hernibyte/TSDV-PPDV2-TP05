@@ -26,6 +26,7 @@ public class Player : MonoBehaviour
     public void TakePoints(int amount)
     {
         points += amount;
+        TemporalData.Score += amount;
         canvasManager.UpdatePoints();
     }
 
