@@ -3,18 +3,24 @@ using System.Collections.Generic;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-public class EnemySpawner : MonoBehaviour
+public class Spawner : MonoBehaviour
 {
     [SerializeField] GameObject enemy;
+    [SerializeField] GameObject collectable;
     [SerializeField] int enemyLenght = 10;
+    [SerializeField] int collectableLenght = 10;
+
     Vector3 spawnPosition;
     Vector3 spawnRotation;
-    GameObject[] ts;
+
+    GameObject[] e;
+    GameObject[] c;
     float timer = 0f;
 
     private void Start()
     {
-        ts = new GameObject[enemyLenght];
+        e = new GameObject[enemyLenght];
+        c = new GameObject[collectableLenght];
     }
 
     void Update()
@@ -40,7 +46,7 @@ public class EnemySpawner : MonoBehaviour
 
     void SetSpawnPosition()
     {
-        spawnPosition = new Vector3(Random.Range(405, 592), 1.60f, Random.Range(402, 597));
+        spawnPosition = new Vector3(Random.Range(405, 592), Terrain.activeTerrain.SampleHeight(transform.position) + transform.localScale.x / 2, Random.Range(402, 597));
     }
 
     void SetSpawnRotation()
@@ -54,7 +60,13 @@ public class EnemySpawner : MonoBehaviour
         {
             SetSpawnPosition();
             SetSpawnRotation();
-            ts[i] = Instantiate(enemy, spawnPosition, Quaternion.Euler(spawnRotation), this.transform);
+            e[i] = Instantiate(enemy, spawnPosition, Quaternion.Euler(spawnRotation), this.transform);
+        }
+        for (int i = 0; i < collectableLenght; i++)
+        {
+            SetSpawnPosition();
+            SetSpawnRotation();
+            c[i] = Instantiate(collectable, spawnPosition, Quaternion.Euler(spawnRotation), this.transform);
         }
     }
 
@@ -62,7 +74,11 @@ public class EnemySpawner : MonoBehaviour
     {
         for (int i = 0; i < enemyLenght; i++)
         {
-            Destroy(ts[i]);
+            Destroy(e[i]);
+        }
+        for (int i = 0; i < collectableLenght; i++)
+        {
+            Destroy(c[i]);
         }
     }
 }
