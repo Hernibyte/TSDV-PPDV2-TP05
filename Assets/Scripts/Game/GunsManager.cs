@@ -10,8 +10,8 @@ public class GunsManager : MonoBehaviour
 
     void Start()
     {
-        primaryGun.SetActive(true);
-        secundaryGun.SetActive(false);
+        primaryGun.SetActive(false);
+        secundaryGun.SetActive(true);
     }
 
     void Update()

@@ -34,22 +34,16 @@ public class Shoot : MonoBehaviour
         switch (gunType)
         {
             case GunType.Pistol:
-
                 if (Physics.Raycast(initialRay.transform.position, cam.transform.forward, out hit, range))
                 {
                     enemy = hit.transform.GetComponent<Enemy>();
-
                     if (enemy != null)
                     {
                         enemy.TakeDamage(damageAmount, player);
                     }
                 }
-
                 break;
             case GunType.Cannon:
-
-
-
                 break;
         }
     }
